@@ -12,7 +12,8 @@ import {
     LayoutGrid,
     Zap,
     Maximize,
-    ArrowLeft
+    ArrowLeft,
+    Image as ImageIcon
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -52,6 +53,13 @@ const categories = [
         icon: Type,
         href: "/playground/css/typography",
         color: "from-amber-500 to-orange-500"
+    },
+    {
+        title: "Backgrounds",
+        description: "Master background images, gradients, blending, and clipping.",
+        icon: ImageIcon,
+        href: "/playground/css/backgrounds",
+        color: "from-teal-400 to-cyan-500"
     },
     {
         title: "Box Shadow",
