@@ -22,7 +22,7 @@ const categories = [
         title: "Borders & Radius",
         description: "Control border radius, width, style, and colors visually.",
         icon: BoxSelect,
-        href: "/playground/css/borders",
+        href: "/playground/css/border",
         color: "from-pink-500 to-rose-500"
     },
     {
@@ -54,10 +54,10 @@ const categories = [
         color: "from-amber-500 to-orange-500"
     },
     {
-        title: "Effects & Shadows",
+        title: "Box Shadow",
         description: "Create depth with box-shadows, glow effects, and blurs.",
         icon: Layers,
-        href: "/playground/css/effects",
+        href: "/playground/css/box-shadow",
         color: "from-fuchsia-500 to-pink-500"
     },
     {
