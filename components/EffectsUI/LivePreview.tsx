@@ -50,7 +50,7 @@ export function LivePreview({ html, css, js }: { html: string, css: string, js?:
           bg-transparent 
           /* 2. Scale it down by 0.5 to fit perfectly (1/2 = 0.5) */
           scale-[0.5] 
-          pointer-events-none
+          
           transition-transform 
           duration-500
         "
