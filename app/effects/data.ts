@@ -1312,5 +1312,129 @@ function animate() {
 init();
 animate();`
     }
+},
+{
+    id: "3d-snowfall",
+    title: "3D Snowfall",
+    description: "An advanced 3D snowfall simulation where each particle possesses unique physical properties, resulting in randomized, non-uniform drifting patterns.",
+    keywords: ["random motion", "atmospheric snow", "canvas physics", "3d particles", "procedural drift"],
+    code: {
+        html: `<div class="snow-scene">
+    <canvas id="snowCanvas"></canvas>
+    <div class="snow-ui">
+        <h1>WINTER ARCHIVE</h1>
+    </div>
+</div>`,
+        css: `.snow-scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#snowCanvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.snow-ui {
+    position: relative;
+    z-index: 10;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.8em;
+    opacity: 0.4;
+    pointer-events: none;
+}`,
+        js: `const canvas = document.getElementById('snowCanvas');
+const ctx = canvas.getContext('2d');
+let flakes = [];
+
+function init() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    flakes = Array.from({ length: 130 }, () => new Snowflake());
+}
+
+class Snowflake {
+    constructor() { this.reset(); }
+
+    reset() {
+        this.z = Math.random(); 
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height - canvas.height;
+        this.size = (this.z * 5) + 1.5; 
+        this.speedY = (this.z * 0.6) + 0.3; 
+        
+        // RANDOMIZATION LOGIC:
+        // Each flake gets a unique 'swing' speed and offset
+        this.swingSpeed = Math.random() * 0.02 + 0.005; 
+        this.swingRadius = Math.random() * 1.5 + 0.5;
+        this.swingStep = Math.random() * Math.PI * 2; // Random starting phase
+        
+        this.opacity = (this.z * 0.5) + 0.1;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.spin = (Math.random() - 0.5) * 0.015;
+        this.isCrystal = Math.random() > 0.65;
+    }
+
+    update() {
+        this.y += this.speedY;
+        
+        // Apply individualized sine-wave horizontal motion
+        this.swingStep += this.swingSpeed;
+        this.x += Math.sin(this.swingStep) * this.swingRadius;
+        
+        // Add a slight constant drift based on size (simulating wind)
+        this.x += (this.z * 0.2); 
+
+        this.rotation += this.spin;
+        if (this.y > canvas.height + 20) this.reset();
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.x < -20) this.x = canvas.width + 20;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        if (this.isCrystal) {
+            ctx.scale(1, Math.abs(Math.cos(this.rotation * 0.3)));
+            ctx.strokeStyle = \`rgba(255, 255, 255, \${this.opacity})\`;
+            ctx.lineWidth = 0.8;
+            for (let i = 0; i < 6; i++) {
+                ctx.rotate(Math.PI / 3);
+                ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, this.size);
+                ctx.moveTo(0, this.size * 0.4); ctx.lineTo(this.size * 0.3, this.size * 0.6);
+                ctx.stroke();
+            }
+        } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size * 0.3, 0, Math.PI * 2);
+            ctx.fillStyle = \`rgba(255, 255, 255, \${this.opacity * 0.7})\`;
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    flakes.sort((a, b) => a.z - b.z).forEach(f => {
+        f.update();
+        f.draw(ctx);
+    });
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', init);
+init();
+animate();`
+    }
 }
 ];
