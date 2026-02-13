@@ -76,6 +76,11 @@ export const playgroundData = {
                 description: "Master Tailwind layout utilities including flexbox, grid, spacing, sizing, and positioning classes. Visual playground for rapid prototyping.",
                 keywords: ["tailwind layout", "tailwind flexbox", "tailwind grid", "spacing utilities", "tailwind sizing"]
             },
+            grid: {
+                title: "Tailwind Grid Layout Playground - Grid Template & Spacing",
+                description: "Master Tailwind Grid layout utilities including grid-cols, grid-rows, gap, and col/row spanning classes. Visual playground for rapid prototyping.",
+                keywords: ["tailwind grid", "grid-cols", "grid-rows", "gap", "col-span", "row-span"]
+            },
             typography: {
                 title: "Tailwind Typography Playground - Font & Text Utilities",
                 description: "Experiment with Tailwind typography utilities for font-size, font-weight, line-height, letter-spacing, and text colors.",
