@@ -8830,14 +8830,351 @@ init();`
         js: `// High-Score Syncing...`
     }
 },
+{
+    id: "kinetic-magnet-pro",
+    title: "Kinetic Magnet — Button",
+    description: "A high-fidelity interactive button using spring physics. The button base gravitates toward the cursor while the internal label floats on a secondary parallax plane, creating a tangible sense of mass and magnetism.",
+    tags: ["Magnetic", "Physics", "Minimal", "Interactive", "Premium"],
+    keywords: ["magnetic button css", "spring physics ui", "parallax button hover", "kinetic interaction"],
+    code: {
+        html: `
+    <div class="magnetic-item" id="magnetWrap">
+        <button class="kinetic-btn" id="magnetBtn">
+            <span class="btn-label" id="magnetText">INITIALIZE CORE</span>
+            
+            <div class="btn-glint" id="magnetGlint"></div>
+            
+            <div class="btn-grain"></div>
+        </button>
+    </div>`,
+        css: `
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
 
 
+.magnetic-item {
+    position: relative;
+    will-change: transform;
+    /* Spring transition for smooth snapping back */
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.kinetic-btn {
+    position: relative;
+    padding: 28px 70px;
+    background: #111;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-label {
+    position: relative;
+    z-index: 10;
+    display: block;
+    will-change: transform;
+    transition: transform 0.2s ease-out;
+}
+
+/* --- DYNAMIC LIGHT GLINT --- */
+.btn-glint {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    top: 0; left: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    mix-blend-mode: overlay;
+}
+
+/* --- MATERIAL TEXTURE --- */
+.btn-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.kinetic-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.kinetic-btn:active {
+    transform: scale(0.97);
+}
+`,
+        js: `
+const wrap = document.getElementById('magnetWrap');
+const btn = document.getElementById('magnetBtn');
+const text = document.getElementById('magnetText');
+const glint = document.getElementById('magnetGlint');
+
+document.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    
+    // Calculate center of the button
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Distance between mouse and button center
+    const dx = e.clientX - centerX;
+    const dy = e.clientY - centerY;
+    const distance = Math.hypot(dx, dy);
+    
+    // Interaction Radius (how far out it starts pulling)
+    const radius = 250;
+
+    if (distance < radius) {
+        // Power curve: gets stronger as you get closer
+        const power = (radius - distance) / radius;
+        
+        // Displacement factors
+        const xMove = dx * power * 0.4;
+        const yMove = dy * power * 0.4;
+        
+        // Apply Magnetism to the Wrap
+        wrap.style.transform = \`translate(\${xMove}px, \${yMove}px)\`;
+        
+        // Apply Parallax to the Text (Inner float)
+        text.style.transform = \`translate(\${xMove * 0.3}px, \${yMove * 0.3}px)\`;
+        
+        // Position the Glint (The interactive highlight)
+        const glintX = e.clientX - rect.left;
+        const glintY = e.clientY - rect.top;
+        glint.style.left = \`\${glintX}px\`;
+        glint.style.top = \`\${glintY}px\`;
+        glint.style.opacity = power;
+    } else {
+        // Reset position when mouse is outside radius
+        wrap.style.transform = 'translate(0px, 0px)';
+        text.style.transform = 'translate(0px, 0px)';
+        glint.style.opacity = '0';
+    }
+});`
+    }
+},
+{
+    id: "retro-neon-tube-pro",
+    title: "Retro Neon Tube — Button",
+    description: "A cinematic neon sign button featuring realistic gas-tube ignition flicker, layered volumetric glow, chromatic bleed, and glass reflection detailing.",
+    tags: ["Neon", "Retro", "Arcade", "Cyberpunk", "Vintage", "Glow"],
+    code: {
+        html: `
+    <button class="neon-btn">
+        <span class="neon-core">OPEN SHOP</span>
+        <span class="neon-glow"></span>
+        <span class="glass-sheen"></span>
+    </button>
+`,
+        css: `
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
 
+/* BUTTON BASE */
+.neon-btn{
+    position:relative;
+    padding:22px 60px;
+    background:transparent;
+    border:2px solid #1a1a1f;
+    border-radius:8px;
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s ease;
+    backdrop-filter:blur(2px);
+}
 
+/* TEXT CORE (HOT CENTER OF TUBE) */
+.neon-core{
+    position:relative;
+    z-index:3;
+    font-family:'Orbitron',monospace;
+    font-size:1.3rem;
+    letter-spacing:4px;
+    color:#2a2a2a;
+    transition:.3s ease;
+}
 
+/* OUTER GLOW LAYER */
+.neon-glow{
+    position:absolute;
+    inset:0;
+    border-radius:8px;
+    pointer-events:none;
+    z-index:1;
+    opacity:0;
+    transition:.3s ease;
+}
 
+/* GLASS REFLECTION */
+.glass-sheen{
+    position:absolute;
+    inset:0;
+    border-radius:8px;
+    background:linear-gradient(
+        120deg,
+        rgba(255,255,255,0.15) 0%,
+        transparent 40%
+    );
+    mix-blend-mode:overlay;
+    opacity:.4;
+    pointer-events:none;
+    z-index:4;
+}
 
+/* HOVER = IGNITION */
+.neon-btn:hover{
+    border-color:#ff00cc;
+}
+
+/* Gas ignition flicker */
+.neon-btn:hover .neon-core{
+    color:#ff4dff;
+    text-shadow:
+        0 0 3px #ff4dff,
+        0 0 8px #ff00ff,
+        0 0 18px #ff00ff,
+        0 0 40px #ff00ff;
+    animation:ignite 1.4s infinite;
+}
+
+.neon-btn:hover .neon-glow{
+    opacity:1;
+    background:
+        radial-gradient(circle at center,
+            rgba(255,0,255,0.35),
+            transparent 70%);
+    box-shadow:
+        0 0 40px rgba(255,0,255,0.6),
+        0 0 80px rgba(255,0,255,0.4),
+        0 0 140px rgba(255,0,255,0.2);
+    animation:outer-flicker 1.4s infinite;
+}
+
+/* IGNITION FLICKER TIMING (Irregular) */
+@keyframes ignite{
+    0%, 12%, 18%, 22%, 100% { opacity:1; }
+    14%, 20% { opacity:.4; }
+    16% { opacity:.8; }
+}
+
+@keyframes outer-flicker{
+    0%, 15%, 21%, 23%, 100%{
+        box-shadow:
+            0 0 40px rgba(255,0,255,0.6),
+            0 0 80px rgba(255,0,255,0.4),
+            0 0 140px rgba(255,0,255,0.2);
+    }
+    17%, 19%{
+        box-shadow:
+            0 0 10px rgba(255,0,255,0.2);
+    }
+}
+
+/* ACTIVE CLICK */
+.neon-btn:active{
+    transform:scale(.96);
+    filter:hue-rotate(30deg);
+}
+`
+    }
+},
+{
+    id: "quantum-tunnel",
+    title: "Quantum Tunnel — High-Contrast Scan Button",
+    description: "An optimized version of the scan-line button. Uses text-inversion and a controlled glow-bleed to ensure 100% legibility during high-intensity state changes.",
+    tags: ["Cyber", "Legibility", "Animation", "Tech"],
+    code: {
+        html: `
+    <button class="tunnel-btn">
+        <span class="btn-label">AUTH_ACCESS</span>
+        <div class="scan-overlay"></div>
+        <div class="glow-edge"></div>
+    </button>`,
+        css: `
+
+.tunnel-btn {
+    position: relative;
+    padding: 20px 50px;
+    background: transparent;
+    border: 1px solid rgba(0, 242, 255, 0.4);
+    color: #00f2ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.btn-label {
+    position: relative;
+    z-index: 10;
+    /* Ensuring text stays sharp regardless of background */
+    mix-blend-mode: exclusion; 
+    transition: letter-spacing 0.4s;
+}
+
+.scan-overlay {
+    position: absolute;
+    inset: 0;
+    /* Horizontal scan-lines */
+    background: repeating-linear-gradient(
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 242, 255, 0.2) 2px,
+        rgba(0, 242, 255, 0.2) 4px
+    );
+    background-size: 100% 4px;
+    opacity: 0.5;
+    z-index: 1;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+/* --- THE HOVER REFINEMENT --- */
+.tunnel-btn:hover {
+    color: #fff; /* Switch to white for maximum punch */
+    border-color: #00f2ff;
+    box-shadow: 
+        0 0 20px rgba(0, 242, 255, 0.4),
+        inset 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.tunnel-btn:hover .scan-overlay {
+    background: #00f2ff;
+    opacity: 1;
+    /* Move lines horizontally while solidifying */
+    animation: scan-pulse 0.2s steps(2) infinite;
+}
+
+.tunnel-btn:hover .btn-label {
+    letter-spacing: 6px; /* Expanding effect adds 'digital' weight */
+}
+
+@keyframes scan-pulse {
+    0% { transform: scaleY(1); opacity: 0.8; }
+    100% { transform: scaleY(1.1); opacity: 1; }
+}
+
+.tunnel-btn:active {
+    transform: scale(0.95);
+    filter: hue-rotate(-20deg);
+}
+`,
+        js: `// Refined CSS-only interaction`
+    }
+},
 
 
 

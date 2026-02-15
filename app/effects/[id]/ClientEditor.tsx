@@ -420,8 +420,8 @@ ${component}`;
                     </div>
 
                     {/* Iframe Container */}
-                    <div className="flex-1 min-h-0 relative bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center flex flex-col">
-                        <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]" />
+                    <div className="flex-1 min-h-0 relative flex flex-col">
+                        <div className="absolute inset-0 bg-gray-900/10 backdrop-blur-[2px]" />
                         <iframe
                             srcDoc={srcDoc}
                             className={`w-full flex-1 min-h-0 relative z-10 border-0 ${isDragging ? 'pointer-events-none' : ''}`}
