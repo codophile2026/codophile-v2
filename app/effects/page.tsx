@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,6 +13,14 @@ import { LivePreview } from "@/components/EffectsUI/LivePreview";
 const ITEMS_PER_PAGE = 9;
 
 export default function EffectsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#030014] text-white flex items-center justify-center">Loading...</div>}>
+      <EffectsContent />
+    </Suspense>
+  );
+}
+
+function EffectsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -58,7 +66,7 @@ export default function EffectsPage() {
 
       <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
 
-                {/* Hero */}
+        {/* Hero */}
         <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -74,9 +82,9 @@ export default function EffectsPage() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-7xl font-bold tracking-tight mb-6 flex flex-nowrap justify-center items-center whitespace-nowrap"
           >
-                        Cool CSS{" "}
-                        <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-400 via-purple-400 to-indigo-400 animate-gradient-x">
-                            Effects
+            Cool CSS{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-400 via-purple-400 to-indigo-400 animate-gradient-x">
+              Effects
             </span>
           </motion.h1>
 
@@ -210,7 +218,7 @@ export function ConstellationPagination({
   return (
     <div className="relative mt-32 mb-16 flex justify-center items-center">
       <div className="relative flex items-center gap-6 md:gap-10">
-        
+
         {/* The Constellation Path (Background Line) */}
         <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-pink-500/30 to-transparent -translate-y-1/2" />
 
