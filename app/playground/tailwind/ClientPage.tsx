@@ -80,6 +80,13 @@ const categories = [
         icon: "/icons/animations.png",
         href: "/playground/tailwind/animations",
         color: "from-violet-500 to-purple-600"
+    },
+    {
+        title: "Tooltips",
+        description: "Create custom tooltips with positioning, arrows, and visibility.",
+        icon: "/icons/interactivity.png",
+        href: "/playground/tailwind/tooltip",
+        color: "from-lime-400 to-green-500"
     }
 ];
 

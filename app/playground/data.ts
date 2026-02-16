@@ -120,6 +120,11 @@ export const playgroundData = {
                 title: "Tailwind Animations Playground - Animate Utilities & Transitions",
                 description: "Experiment with Tailwind animation and transition utilities for creating smooth, engaging UI animations.",
                 keywords: ["tailwind animations", "animate utilities", "transition tailwind", "animation classes"]
+            },
+            tooltips: {
+                title: "Tailwind Tooltips - Position & Arrow Utilities",
+                description: "Create custom tooltips using Tailwind CSS positioning, visibility, and border utilities. Master the art of tooltip creation.",
+                keywords: ["tailwind tooltip", "tooltip positioning", "tailwind arrow", "hover effects", "group-hover"]
             }
         }
     }
