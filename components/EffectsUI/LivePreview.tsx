@@ -118,11 +118,19 @@ export function LivePreview({ html, css, js, previewImage }: LivePreviewProps) {
         />
       ) : (
         <>
-          <img
-            src={previewImage}
-            className="w-full h-full object-cover pointer-events-none"
-            loading="lazy"
-          />
+          {previewImage ? (
+            <img
+              src={previewImage}
+              alt="Effect Preview"
+              className="w-full h-full object-cover pointer-events-none"
+              loading="lazy"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070707] text-gray-600">
+               <span className="text-xs uppercase tracking-widest opacity-50 block mb-1">No Thumbnail</span>
+               <span className="text-[10px] text-gray-700 uppercase tracking-widest">Hover to preview</span>
+            </div>
+          )}
 
           {!isInView && (
             <div className="absolute flex flex-col items-center justify-center text-gray-500 gap-2 animate-pulse">

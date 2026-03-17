@@ -1,8 +1,12 @@
 import { getAlgoliaClient, ALGOLIA_INDEX_NAME } from "@/lib/algolia/client";
-import { effectsData } from "@/app/effects/data";
+import connectToDatabase from "@/lib/db";
+import Effect from "@/lib/models/Effect";
 
 export async function POST() {
-  const records = effectsData.map((effect) => ({
+  await connectToDatabase();
+  const effects = await Effect.find({ isPublished: true }).lean();
+
+  const records = effects.map((effect: any) => ({
     objectID: effect.id,
     title: effect.title,
     description: effect.description,

@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { effectsData } from "./data";
 import { LivePreview } from "@/components/EffectsUI/LivePreview";
 import Mascot from "@/components/EffectsUI/Mascot";
 
@@ -31,7 +30,31 @@ function EffectsContent() {
   // 1. Single Source of Truth: Read directly from the URL. 
   // Next.js will automatically re-render this component when the URL changes.
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const totalPages = Math.ceil(effectsData.length / ITEMS_PER_PAGE);
+  
+  const [effects, setEffects] = React.useState<any[]>([]);
+  const [totalPages, setTotalPages] = React.useState(1);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    let active = true;
+    const fetchEffects = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/effects?page=${page}&limit=${ITEMS_PER_PAGE}`);
+        const data = await res.json();
+        if (active) {
+          setEffects(data.effects || []);
+          setTotalPages(data.pagination?.totalPages || 1);
+        }
+      } catch (err) {
+        console.error('Failed to fetch effects:', err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    fetchEffects();
+    return () => { active = false; };
+  }, [page]);
 
   // 2. Navigation Handler
   const handlePageChange = (newPage: number) => {
@@ -50,10 +73,6 @@ function EffectsContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const paginatedData = effectsData.slice(
-    (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
-  );
 
   return (
     <div className="min-h-screen bg-[#030014] text-white selection:bg-pink-500/30 font-sans overflow-hidden">
@@ -101,18 +120,39 @@ function EffectsContent() {
 
         {/* Animated Grid */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={page}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {paginatedData.map((effect, idx) => (
-              <EffectCard key={effect.id} effect={effect} index={idx} />
-            ))}
-          </motion.div>
+          {loading ? (
+             <motion.div 
+               key="loading"
+               initial={{ opacity: 0 }} 
+               animate={{ opacity: 1 }} 
+               exit={{ opacity: 0 }}
+               className="flex justify-center items-center py-20"
+             >
+               <div className="flex flex-col items-center gap-4 text-pink-400">
+                 <div className="w-8 h-8 rounded-full border-t-2 border-r-2 border-pink-400 animate-spin" />
+                 <span className="text-sm tracking-widest uppercase">Loading Magic...</span>
+               </div>
+             </motion.div>
+          ) : (
+             <motion.div
+               key={page}
+               initial={{ opacity: 0, y: 30 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -30 }}
+               transition={{ duration: 0.4 }}
+               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+             >
+               {effects.length > 0 ? (
+                 effects.map((effect: any, idx) => (
+                   <EffectCard key={effect._id || effect.id} effect={effect} index={idx} />
+                 ))
+               ) : (
+                 <div className="col-span-full py-20 text-center text-zinc-500">
+                   No effects found.
+                 </div>
+               )}
+             </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Orbital Pagination */}

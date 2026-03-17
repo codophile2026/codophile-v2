@@ -4,15 +4,14 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Play, Code, Layers, RefreshCw, Terminal, XCircle, Trash2, Maximize2, Minimize2, Download, Layout, Columns, Square, X, GripVertical } from "lucide-react";
 import Link from "next/link";
-import { effectsData } from "../data";
 import Editor from "@monaco-editor/react";
 
-export default function ClientEditor() {
+export default function ClientEditor({ initialEffect }: { initialEffect: any }) {
     const params = useParams();
     const router = useRouter();
     const effectId = params.id as string;
 
-    const effect = effectsData.find(e => e.id === effectId);
+    const effect = initialEffect;
 
     // Editor State
     const [htmlCode, setHtmlCode] = useState("");
