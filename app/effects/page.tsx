@@ -9,6 +9,7 @@ import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { LivePreview } from "@/components/EffectsUI/LivePreview";
 import Mascot from "@/components/EffectsUI/Mascot";
+import AdSenseDisplay from "@/components/AdSenseDisplay";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -127,6 +128,9 @@ function EffectsContent() {
             clean copy-paste code.
           </motion.p>
         </div>
+        <div className="flex justify-center mb-12 sm:mb-16">
+          <AdSenseDisplay className="w-full max-w-3xl min-h-[90px]" />
+        </div>
         {/* Animated Grid */}
         <AnimatePresence mode="wait">
           {loading ? (
@@ -199,7 +203,6 @@ function EffectsContent() {
             </Link>
           </div>
         </section>
-        ;
       </main>
       {/* --- MASCOT COMPONENT --- */}
       {/* h-0 ensures this container takes up absolutely ZERO vertical space in your layout */}

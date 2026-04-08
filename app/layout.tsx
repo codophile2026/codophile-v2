@@ -4,6 +4,7 @@ import "./globals.css";
 import SWRegister from "@/components/SWRegister";
 import Script from "next/script";
 import NextTopLoader from 'nextjs-toploader';
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -140,7 +141,7 @@ export default function RootLayout({
         <SWRegister />
         {children}
         <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3946412746626275"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />

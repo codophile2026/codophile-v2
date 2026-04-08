@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Palette, Wind, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSenseDisplay from "@/components/AdSenseDisplay";
 
 export default function PlaygroundClientPage() {
   return (
@@ -42,6 +43,10 @@ export default function PlaygroundClientPage() {
             to design layouts, test styles, and generate clean production-ready
             code instantly.
           </motion.p>
+        </div>
+
+        <div className="flex justify-center w-full max-w-3xl mb-12 sm:mb-16">
+          <AdSenseDisplay className="w-full min-h-[90px]" />
         </div>
 
         {/* Cards */}

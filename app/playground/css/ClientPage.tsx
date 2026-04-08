@@ -19,6 +19,7 @@ import Image from 'next/image';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Mascot from "@/components/EffectsUI/Mascot";
+import AdSenseDisplay from "@/components/AdSenseDisplay";
 
 const categories = [
     {
@@ -163,6 +164,10 @@ export default function CSSPlaygroundClient() {
                     <div className="hidden md:block shrink-0 pr-8">
                         <Mascot />
                     </div>
+                </div>
+
+                <div className="flex justify-center mb-10 sm:mb-12">
+                    <AdSenseDisplay className="w-full max-w-3xl min-h-[90px]" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

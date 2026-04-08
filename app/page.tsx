@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CoreCssSection from "@/components/CoreCssSection";
 import TailwindSection from "@/components/TailwindSection";
+import AdSenseDisplay from "@/components/AdSenseDisplay";
 import FeaturesBento from "@/components/FeaturesBento";
 import ReviewsSection from "@/components/ReviewsSection";
 import Footer from "@/components/Footer";
@@ -32,6 +33,9 @@ export default function Home() {
       <Hero />
       <CoreCssSection />
       <TailwindSection />
+      <div className="flex justify-center px-4 py-6 sm:py-10">
+        <AdSenseDisplay className="w-full max-w-3xl min-h-[90px]" />
+      </div>
       <FeaturesBento />
       <ReviewsSection />
       <Footer />
